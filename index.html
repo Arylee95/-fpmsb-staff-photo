@@ -7,17 +7,9 @@
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: 'Segoe UI', Arial, sans-serif; background: #f2f2f2; min-height: 100vh; }
-    .header { background: white; border-bottom: 4px solid #CC0001; padding: 16px 0; }
-    .header-inner { max-width: 700px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; gap: 18px; }
-    .logo-circle { width: 68px; height: 68px; background: #003366; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-    .logo-circle span { color: #f0c040; font-size: 15px; font-weight: 900; letter-spacing: 1px; text-align: center; line-height: 1.2; }
-    .header-text h1 { font-size: 16px; font-weight: 700; color: #003366; line-height: 1.3; }
-    .header-text p { font-size: 12px; color: #777; margin-top: 3px; }
-    .breadcrumb { max-width: 700px; margin: 0 auto; padding: 8px 24px; font-size: 11px; color: #888; background: #f9f9f9; border-bottom: 1px solid #e8e8e8; }
-    .breadcrumb span { color: #003366; font-weight: 600; }
     .main { max-width: 700px; margin: 20px auto; padding: 0 24px 40px; }
-    .form-card { background: white; border: 1px solid #d8d8d8; border-top: 4px solid #003366; }
-    .form-card-header { background: #003366; border-bottom: 1px solid #002244; padding: 14px 20px; }
+    .form-card { background: white; border: 1px solid #d8d8d8; border-top: 4px solid #1746EB; }
+    .form-card-header { background: #1746EB; border-bottom: 1px solid #1535C5; padding: 14px 20px; }
     .form-card-header h2 { font-size: 14px; font-weight: 700; color: white; }
     .form-card-header p { font-size: 11px; color: rgba(255,255,255,0.75); margin-top: 2px; }
     .form-card-body { padding: 20px; }
@@ -25,47 +17,45 @@
     .progress-wrap { margin-bottom: 20px; }
     .progress-top { display: flex; justify-content: space-between; font-size: 11px; color: #666; margin-bottom: 5px; }
     .progress-bar { height: 5px; background: #e8e8e8; border-radius: 2px; overflow: hidden; }
-    .progress-fill { height: 100%; background: #003366; width: 0%; transition: width 0.3s; }
-    .section-label { background: #003366; color: white; font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 6px 12px; margin: 20px -20px 16px; }
+    .progress-fill { height: 100%; background: #1746EB; width: 0%; transition: width 0.3s; }
+    .section-label { background: #1746EB; color: white; font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 6px 12px; margin: 20px -20px 16px; }
     .field { margin-bottom: 14px; }
     .field label { display: block; font-size: 12px; font-weight: 600; color: #333; margin-bottom: 5px; }
-    .field label .req { color: #CC0001; margin-left: 2px; }
+    .field label .req { color: #FF6600; margin-left: 2px; }
     .field input, .field select { width: 100%; padding: 8px 10px; border: 1px solid #ccc; border-radius: 2px; font-size: 13px; color: #333; background: white; outline: none; }
-    .field input:focus, .field select:focus { border-color: #003366; box-shadow: 0 0 0 2px rgba(0,51,102,0.1); }
+    .field input:focus, .field select:focus { border-color: #1746EB; box-shadow: 0 0 0 2px rgba(23,70,235,0.1); }
     .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
     .upload-area { border: 1.5px dashed #aaa; background: #fafafa; padding: 24px 16px; text-align: center; cursor: pointer; transition: border-color 0.2s; }
-    .upload-area:hover { border-color: #003366; background: #f0f4ff; }
+    .upload-area:hover { border-color: #1746EB; background: #f0f4ff; }
     .upload-icon { font-size: 28px; margin-bottom: 8px; }
     .upload-area p { font-size: 13px; color: #444; margin-bottom: 3px; }
     .upload-area small { font-size: 11px; color: #999; }
     .preview-box { display: none; flex-direction: column; align-items: center; gap: 8px; padding: 14px; background: #f6ffed; border: 1px solid #b7eb8f; }
     .preview-box img { width: 80px; height: 100px; object-fit: cover; border: 1px solid #ccc; }
     .preview-box .ok { font-size: 12px; color: #389e0d; font-weight: 600; }
-    .preview-box .change { font-size: 11px; color: #003366; cursor: pointer; text-decoration: underline; background: none; border: none; }
+    .preview-box .change { font-size: 11px; color: #1746EB; cursor: pointer; text-decoration: underline; background: none; border: none; }
     #photoInput { display: none; }
     .submit-wrap { margin-top: 20px; border-top: 1px solid #e8e8e8; padding-top: 16px; }
     .required-note { font-size: 11px; color: #999; margin-bottom: 12px; }
-    .submit-btn { width: 100%; padding: 11px; background: #003366; color: white; border: none; font-size: 13px; font-weight: 700; cursor: pointer; letter-spacing: 0.5px; }
-    .submit-btn:hover:not(:disabled) { background: #004080; }
+    .submit-btn { width: 100%; padding: 11px; background: #1746EB; color: white; border: none; font-size: 13px; font-weight: 700; cursor: pointer; letter-spacing: 0.5px; }
+    .submit-btn:hover:not(:disabled) { background: #1535C5; }
     .submit-btn:disabled { background: #aaa; cursor: not-allowed; }
     .success { display: none; text-align: center; padding: 40px 20px; }
     .success .icon { font-size: 48px; margin-bottom: 14px; }
-    .success h2 { font-size: 18px; color: #003366; font-weight: 700; margin-bottom: 8px; }
+    .success h2 { font-size: 18px; color: #1746EB; font-weight: 700; margin-bottom: 8px; }
     .success p { font-size: 13px; color: #555; line-height: 1.7; }
     .success .ref { display: inline-block; margin-top: 14px; background: #f7f7f7; border: 1px solid #ddd; padding: 8px 20px; font-size: 12px; color: #333; font-family: monospace; }
-    .site-footer { background: #003366; color: rgba(255,255,255,0.8); text-align: center; font-size: 11px; padding: 14px 20px; line-height: 1.8; }
-    .site-footer strong { color: #f0c040; }
+    .site-footer { background: #1746EB; color: rgba(255,255,255,0.8); text-align: center; font-size: 11px; padding: 14px 20px; line-height: 1.8; }
+    .site-footer strong { color: #FF6600; }
     .site-footer a { color: rgba(255,255,255,0.9); text-decoration: none; }
-    @media (max-width: 580px) { .field-row { grid-template-columns: 1fr; } .header-text h1 { font-size: 13px; } }
+    @media (max-width: 580px) { .field-row { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
-
 <div class="main">
   <div class="form-card">
     <div class="form-card-header">
-      <h2>BORANG REKOD GAMBAR PETUGAS</h2>
-      <p>Pengemaskinian Kad Akses Kakitangan FPMSB &bull; Untuk Kegunaan Dalaman Sahaja</p>
+      <h2>BORANG PENGEMASKINIAN REKOD GAMBAR PETUGAS</h2>
     </div>
     <div class="form-card-body">
       <div id="formSection">
@@ -78,7 +68,7 @@
         <div class="field-row">
           <div class="field">
             <label>No. Kakitangan <span class="req">*</span></label>
-            <input type="text" id="noKakitangan" placeholder="cth: FK001234" oninput="updateProgress()">
+            <input type="text" id="noKakitangan" placeholder="cth: 2400001" oninput="updateProgress()">
           </div>
           <div class="field">
             <label>Nama Penuh (seperti MyKad) <span class="req">*</span></label>
@@ -116,7 +106,7 @@
         </div>
         <input type="file" id="photoInput" accept="image/jpeg,image/png" onchange="handlePhoto(this)">
         <div class="submit-wrap">
-          <p class="required-note"><span style="color:#CC0001">*</span> Medan bertanda adalah wajib diisi</p>
+          <p class="required-note"><span style="color:#FF6600">*</span> Medan bertanda adalah wajib diisi</p>
           <button class="submit-btn" id="submitBtn" onclick="submitForm()" disabled>HANTAR MAKLUMAT</button>
         </div>
       </div>
@@ -130,7 +120,7 @@
   </div>
 </div>
 <div class="site-footer">
-  Bahagian Sumber Manusia & Pentadbiran | <strong>FPMSB</strong> © 2026<br>
+  Disediakan oleh Bahagian Sumber Manusia & Pentadbiran | <strong>FPMSB</strong> © 2026<br>
   Hubungi Kami: <a href="tel:0321912800">03-2191 2800</a> &nbsp;&bull;&nbsp; E-Mail: <a href="mailto:hr.fpmsb@felda.net.my">hr.fpmsb@felda.net.my</a>
 </div>
 <script>
