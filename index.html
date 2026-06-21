@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FPMSB - Borang Rekod Gambar Petugas</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Segoe UI', Arial, sans-serif; background: #f2f2f2; min-height: 100vh; }
+    .header { background: white; border-bottom: 4px solid #CC0001; padding: 16px 0; }
+    .header-inner { max-width: 700px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; gap: 18px; }
+    .logo-circle { width: 68px; height: 68px; background: #003366; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .logo-circle span { color: #f0c040; font-size: 15px; font-weight: 900; letter-spacing: 1px; text-align: center; line-height: 1.2; }
+    .header-text h1 { font-size: 16px; font-weight: 700; color: #003366; line-height: 1.3; }
+    .header-text p { font-size: 12px; color: #777; margin-top: 3px; }
+    .breadcrumb { max-width: 700px; margin: 0 auto; padding: 8px 24px; font-size: 11px; color: #888; background: #f9f9f9; border-bottom: 1px solid #e8e8e8; }
+    .breadcrumb span { color: #003366; font-weight: 600; }
+    .main { max-width: 700px; margin: 20px auto; padding: 0 24px 40px; }
+    .form-card { background: white; border: 1px solid #d8d8d8; border-top: 4px solid #003366; }
+    .form-card-header { background: #003366; border-bottom: 1px solid #002244; padding: 14px 20px; }
+    .form-card-header h2 { font-size: 14px; font-weight: 700; color: white; }
+    .form-card-header p { font-size: 11px; color: rgba(255,255,255,0.75); margin-top: 2px; }
+    .form-card-body { padding: 20px; }
+    .notice { background: #fffbe6; border: 1px solid #ffe58f; border-left: 4px solid #faad14; padding: 11px 14px; font-size: 12px; color: #614700; margin-bottom: 20px; line-height: 1.6; }
+    .progress-wrap { margin-bottom: 20px; }
+    .progress-top { display: flex; justify-content: space-between; font-size: 11px; color: #666; margin-bottom: 5px; }
+    .progress-bar { height: 5px; background: #e8e8e8; border-radius: 2px; overflow: hidden; }
+    .progress-fill { height: 100%; background: #003366; width: 0%; transition: width 0.3s; }
+    .section-label { background: #003366; color: white; font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 6px 12px; margin: 20px -20px 16px; }
+    .field { margin-bottom: 14px; }
+    .field label { display: block; font-size: 12px; font-weight: 600; color: #333; margin-bottom: 5px; }
+    .field label .req { color: #CC0001; margin-left: 2px; }
+    .field input, .field select { width: 100%; padding: 8px 10px; border: 1px solid #ccc; border-radius: 2px; font-size: 13px; color: #333; background: white; outline: none; }
+    .field input:focus, .field select:focus { border-color: #003366; box-shadow: 0 0 0 2px rgba(0,51,102,0.1); }
+    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .upload-area { border: 1.5px dashed #aaa; background: #fafafa; padding: 24px 16px; text-align: center; cursor: pointer; transition: border-color 0.2s; }
+    .upload-area:hover { border-color: #003366; background: #f0f4ff; }
+    .upload-icon { font-size: 28px; margin-bottom: 8px; }
+    .upload-area p { font-size: 13px; color: #444; margin-bottom: 3px; }
+    .upload-area small { font-size: 11px; color: #999; }
+    .preview-box { display: none; flex-direction: column; align-items: center; gap: 8px; padding: 14px; background: #f6ffed; border: 1px solid #b7eb8f; }
+    .preview-box img { width: 80px; height: 100px; object-fit: cover; border: 1px solid #ccc; }
+    .preview-box .ok { font-size: 12px; color: #389e0d; font-weight: 600; }
+    .preview-box .change { font-size: 11px; color: #003366; cursor: pointer; text-decoration: underline; background: none; border: none; }
+    #photoInput { display: none; }
+    .submit-wrap { margin-top: 20px; border-top: 1px solid #e8e8e8; padding-top: 16px; }
+    .required-note { font-size: 11px; color: #999; margin-bottom: 12px; }
+    .submit-btn { width: 100%; padding: 11px; background: #003366; color: white; border: none; font-size: 13px; font-weight: 700; cursor: pointer; letter-spacing: 0.5px; }
+    .submit-btn:hover:not(:disabled) { background: #004080; }
+    .submit-btn:disabled { background: #aaa; cursor: not-allowed; }
+    .success { display: none; text-align: center; padding: 40px 20px; }
+    .success .icon { font-size: 48px; margin-bottom: 14px; }
+    .success h2 { font-size: 18px; color: #003366; font-weight: 700; margin-bottom: 8px; }
+    .success p { font-size: 13px; color: #555; line-height: 1.7; }
+    .success .ref { display: inline-block; margin-top: 14px; background: #f7f7f7; border: 1px solid #ddd; padding: 8px 20px; font-size: 12px; color: #333; font-family: monospace; }
+    .site-footer { background: #003366; color: rgba(255,255,255,0.8); text-align: center; font-size: 11px; padding: 14px 20px; line-height: 1.8; }
+    .site-footer strong { color: #f0c040; }
+    .site-footer a { color: rgba(255,255,255,0.9); text-decoration: none; }
+    @media (max-width: 580px) { .field-row { grid-template-columns: 1fr; } .header-text h1 { font-size: 13px; } }
+  </style>
+</head>
+<body>
+
+<div class="main">
+  <div class="form-card">
+    <div class="form-card-header">
+      <h2>BORANG REKOD GAMBAR PETUGAS</h2>
+      <p>Pengemaskinian Kad Akses Kakitangan FPMSB &bull; Untuk Kegunaan Dalaman Sahaja</p>
+    </div>
+    <div class="form-card-body">
+      <div id="formSection">
+        <div class="notice">⚠️ <strong>Makluman Penting:</strong> Borang ini disediakan bagi tujuan pengemaskinian rekod gambar petugas FPMSB. Semua petugas diminta memuat naik gambar pasport terkini yang jelas dan berkualiti dengan latar belakang berwarna putih atau biru. Kerjasama semua pihak amat dihargai.</div>
+        <div class="progress-wrap">
+          <div class="progress-top"><span>Kemajuan Pengisian Borang</span><span id="pctLabel">0%</span></div>
+          <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+        </div>
+        <div class="section-label">A &nbsp;— Maklumat Kakitangan</div>
+        <div class="field-row">
+          <div class="field">
+            <label>No. Kakitangan <span class="req">*</span></label>
+            <input type="text" id="noKakitangan" placeholder="cth: FK001234" oninput="updateProgress()">
+          </div>
+          <div class="field">
+            <label>Nama Penuh (seperti MyKad) <span class="req">*</span></label>
+            <input type="text" id="nama" placeholder="Nama penuh" oninput="updateProgress()">
+          </div>
+        </div>
+        <div class="section-label">B &nbsp;— Maklumat Wilayah</div>
+        <div class="field">
+          <label>Wilayah / Zon <span class="req">*</span></label>
+          <select id="wilayah" onchange="updateProgress()">
+            <option value="">-- Sila Pilih Wilayah --</option>
+            <option value="Ibu Pejabat">Ibu Pejabat</option>
+            <option value="Wil. Johor">Wil. Johor</option>
+            <option value="Wil. Segamat">Wil. Segamat</option>
+            <option value="Wil. Raja Alias">Wil. Raja Alias</option>
+            <option value="Wil. Kuantan">Wil. Kuantan</option>
+            <option value="Wil. Jengka">Wil. Jengka</option>
+            <option value="Wil. Terengganu">Wil. Terengganu</option>
+            <option value="Wil. Gua Musang">Wil. Gua Musang</option>
+            <option value="Wil. Mempaga">Wil. Mempaga</option>
+            <option value="Wil. Alor Setar">Wil. Alor Setar</option>
+            <option value="Wil. Trolak">Wil. Trolak</option>
+          </select>
+        </div>
+        <div class="section-label">C &nbsp;— Gambar Pasport</div>
+        <div class="upload-area" id="uploadArea" onclick="document.getElementById('photoInput').click()">
+          <div class="upload-icon">📸</div>
+          <p><strong>Klik untuk Muat Naik Gambar</strong></p>
+          <small>Saiz pasport &bull; Latar putih/biru &bull; Format JPG atau PNG &bull; Saiz maksimum 2MB</small>
+        </div>
+        <div class="preview-box" id="previewBox">
+          <img id="previewImg" src="" alt="Preview">
+          <span class="ok">✅ Gambar berjaya dimuat naik</span>
+          <button class="change" onclick="resetPhoto()">Muat naik semula</button>
+        </div>
+        <input type="file" id="photoInput" accept="image/jpeg,image/png" onchange="handlePhoto(this)">
+        <div class="submit-wrap">
+          <p class="required-note"><span style="color:#CC0001">*</span> Medan bertanda adalah wajib diisi</p>
+          <button class="submit-btn" id="submitBtn" onclick="submitForm()" disabled>HANTAR MAKLUMAT</button>
+        </div>
+      </div>
+      <div class="success" id="successSection">
+        <div class="icon">✅</div>
+        <h2>Maklumat Berjaya Dihantar</h2>
+        <p>Terima kasih. Maklumat dan gambar anda telah berjaya direkodkan.<br>Pihak Bahagian Sumber Manusia FPMSB akan memproses rekod anda.<br><br>Sekiranya ada pertanyaan, sila hubungi HR FPMSB.</p>
+        <div class="ref" id="refNo">No. Rujukan: —</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="site-footer">
+  Bahagian Sumber Manusia & Pentadbiran | <strong>FPMSB</strong> © 2026<br>
+  Hubungi Kami: <a href="tel:0321912800">03-2191 2800</a> &nbsp;&bull;&nbsp; E-Mail: <a href="mailto:hr.fpmsb@felda.net.my">hr.fpmsb@felda.net.my</a>
+</div>
+<script>
+  let photoReady = false;
+  function updateProgress() {
+    const fields = ['noKakitangan', 'nama', 'wilayah'];
+    const filled = fields.filter(id => document.getElementById(id).value.trim() !== '').length;
+    const total = fields.length + 1;
+    const pct = Math.round(((filled + (photoReady ? 1 : 0)) / total) * 100);
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('pctLabel').textContent = pct + '%';
+    document.getElementById('submitBtn').disabled = !(filled === fields.length && photoReady);
+  }
+  function handlePhoto(input) {
+    if (!input.files || !input.files[0]) return;
+    const file = input.files[0];
+    if (file.size > 2 * 1024 * 1024) { alert('Gambar melebihi 2MB. Sila pilih gambar yang lebih kecil.'); return; }
+    const reader = new FileReader();
+    reader.onload = e => {
+      document.getElementById('previewImg').src = e.target.result;
+      document.getElementById('uploadArea').style.display = 'none';
+      document.getElementById('previewBox').style.display = 'flex';
+      photoReady = true;
+      updateProgress();
+    };
+    reader.readAsDataURL(file);
+  }
+  function resetPhoto() {
+    document.getElementById('photoInput').value = '';
+    document.getElementById('uploadArea').style.display = 'block';
+    document.getElementById('previewBox').style.display = 'none';
+    photoReady = false;
+    updateProgress();
+  }
+  function submitForm() {
+    const ref = 'FPMSB-' + Date.now().toString().slice(-8);
+    document.getElementById('refNo').textContent = 'No. Rujukan: ' + ref;
+    document.getElementById('formSection').style.display = 'none';
+    document.getElementById('successSection').style.display = 'block';
+  }
+</script>
+</body>
+</html>
