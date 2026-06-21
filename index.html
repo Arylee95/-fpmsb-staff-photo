@@ -155,11 +155,40 @@
     photoReady = false;
     updateProgress();
   }
-  function submitForm() {
-    const ref = 'FPMSB-' + Date.now().toString().slice(-8);
-    document.getElementById('refNo').textContent = 'No. Rujukan: ' + ref;
-    document.getElementById('formSection').style.display = 'none';
-    document.getElementById('successSection').style.display = 'block';
+  async function submitForm() {
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = true;
+    btn.textContent = 'Menghantar...';
+
+    const noKakitangan = document.getElementById('noKakitangan').value;
+    const nama = document.getElementById('nama').value;
+    const wilayah = document.getElementById('wilayah').value;
+
+    // Convert image to base64
+    const photoInput = document.getElementById('photoInput');
+    const file = photoInput.files[0];
+    const reader = new FileReader();
+
+    reader.onload = async function(e) {
+      const gambar = e.target.result;
+
+      try {
+        await fetch('https://defaultdfb8bff70f6d43f89aa586fa75a7e9.d0.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/e9c721961a4340c8bd18c692afe0c385/triggers/manual/paths/invoke?api-version=1', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ noKakitangan, nama, wilayah, gambar })
+        });
+      } catch(err) {
+        console.log('Submitted');
+      }
+
+      const ref = 'FPMSB-' + Date.now().toString().slice(-8);
+      document.getElementById('refNo').textContent = 'No. Rujukan: ' + ref;
+      document.getElementById('formSection').style.display = 'none';
+      document.getElementById('successSection').style.display = 'block';
+    };
+
+    reader.readAsDataURL(file);
   }
 </script>
 </body>
